@@ -21,21 +21,11 @@ sex <- as.numeric(f2g$pheno$Sex)
 
 load(file="data/f2g_perm1.Rdata")
 
-f2g$pheno <- transform(f2g$pheno, Q2 = as.factor(f2g$geno[[]]$data[,find.marker(f2g, CHR, POS)]))
-levels(f2g$pheno$Q2) <- c("B", "H", "R")
-#f2g <- fill.geno(f2g, method="argmax")
-#f2g$pheno <- transform(f2g$pheno,Q2 = as.factor(f2g$geno[[2]]$data[,find.marker(f2g, 2, 75.2)]))
-#levels(f2g$pheno$Q2) <- c("B","H","R")names(f2g$pheno)f2g$pheno <- transform(f2g$pheno, adipor1_islet)
-qplot(adipor1_islet, INS.10wk, color=Q2, shape=Sex, data=f2g$pheno) + geom_smooth(aes(group=Q2), method="lm", se=FALSE)
-#Ghrh_islet <- islet.rz[, annot[grep("Ghrh$", annot$gene1), 1]]
-#lm(formula = INS.10wk ~ Adipor1_islet + Q2, data = f2g$pheno)
-# ^ do summary of this
-
 #SHARED QTL PEAKS:
 #fat weight and Il1b islet expression, chromosome 2
 #body weight and Il1b islet expression, chromosome 2
 #adipose turnover and Il1b islet expression, chromosome 12
-#body weight Nfkb1 islet 5
+#body weight Nfkb1 islet chrom 5
 
 #fat weight
 f2g.scanFat <- scanone(f2g, pheno.col = 4, addcovar = sex, method= "hk")
@@ -144,6 +134,7 @@ plot(f2g.Ad.Turn.Il1b.islet.covar)
 plot(f2g.scanAdTurn, f2g.Ad.Turn.Il1b.islet.covar, col=c("black", "red"))
 add.threshold(f2g.scanAdTurn, perms=f2g.perm1, alpha=0.05, lty="dashed", lwd=2, col="red")
 add.threshold(f2g.scanAdTurn, perms=f2g.perm1, alpha=0.63, lty="dashed", lwd=2, col="green")
+
 
 #Adipose Turnover with Nfkb1 islet expression covariate
 #significant QTL drop chromosome 10

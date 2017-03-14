@@ -98,23 +98,16 @@ triple.fit <- function(X, Y, Q) {
 }
 
 #peak on chr 2 at position 70
-triple.fit(gene.exp("Il1b", islet.rz), clinical("Fat.wt", phenotypes), genotype(chr = 10, pos = 48.3))
+triple.fit(gene.exp("Il1b", islet.rz), clinical("Fat.wt", phenotypes), genotype(chr = 2, pos = 70))
+triple.fit(gene.exp("Il1b", islet.rz), clinical("Weight", phenotypes), genotype(chr = 2, pos = 56.3))
+triple.fit(gene.exp("Nfkb1", islet.rz), clinical("Adipose.turnover", phenotypes), genotype(chr = 10, pos = 42))
+triple.fit(gene.exp("Nfkb1", islet.rz), clinical("Adipose.turnover", phenotypes), genotype(chr = 12, pos = 24.4))
+#peak chromosome 10 pos 42
+#peak chromosome 12 pos 24.4
 
-
-triple.fit(gene.exp("Il1b", adipose.rz), clinical("Fat.wt", phenotypes), genotype(chr = ))
-triple.fit(gene.exp("Nfkb1", islet.rz), clinical("Fat.wt", phenotypes), genotype(chr = ))
-triple.fit(gene.exp("Nfkb1", adipose.rz), clinical("Fat.wt", phenotypes), genotype(chr = ))
-
-#peak chromosome 2 position 56.3
-triple.fit(gene.exp("Il1b", islet.rz), clinical("Weight", phenotypes), genotype(chr = 2, pos= 56.3))
-triple.fit(gene.exp("Il1b", adipose.rz), clinical("Weight", phenotypes), genotype(chr = ))
-triple.fit(gene.exp("Nfkb1", islet.rz), clinical("Weight", phenotypes), genotype(chr = ))
-triple.fit(gene.exp("Nfkb1", adipose.rz), clinical("Weight", phenotypes), genotype(chr = ))
-triple.fit(gene.exp("Il1b", islet.rz), clinical("adipose.turnover", phenotypes), genotype(chr = ))
-triple.fit(gene.exp("Il1b", adipose.rz), clinical("adipose.turnover", phenotypes), genotype(chr = ))
-triple.fit(gene.exp("Nfkb1", islet.rz), clinical("adipose.turnover", phenotypes), genotype(chr = ))
-triple.fit(gene.exp("Nfkb1", adipose.rz), clinical("adipose.turnover", phenotypes), genotype(chr = ))
-
+# fat weight: chrom 2, pos 70
+# body weight: chrom 2 pos 56.3
+# Il1b islet expression: chrom 2 pos 73.7
 
 
 

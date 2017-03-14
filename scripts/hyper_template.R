@@ -1,16 +1,47 @@
 rm(list=ls())
-data(hyper)
-hyper <- sim.geno(hyper, step = 2.5, n.draws=16, err=0.01)
-out1 <- scanone(hyper, method = "imp")
-plot(out1)
-max(out1)
-find.marker(hyper, 4, 29.5) #marker is "D$Mit164"
 
-#getting rid of peak to better see other QTLs
-g <- pull.geno(hyper)[,"D4Mit164"]
-out.c4 <- scanone(hyper, method="imp", addcovar=g)
-plot(out1, out.c4, col=c("blue", "red"))
+setwd("C/Users/sadie.la/Documents/obesity_inflam")
+library(qtl)
 
-#looking for loci that interact with the chr4 locus
-out.c4i <- scanone(hyper, method="imp", addcovar=g, intcovar=g)
-plot(out.c4i - out.c4)
+load("data/BTBR.clean.data.Rdata")
+names(f2g$pheno)
+f2g$pheno <- f2g$pheno[,c("MouseNum", "Sex", "pgm")]
+
+Il1b.islet<- islet.rz[,annot$a_gene_id[which(annot$gene_symbol=="Il1b")]]
+Nfkb1.islet<- islet.rz[,annot$a_gene_id[which(annot$gene_symbol=="Nfkb1")]]
+
+Il1b.adipose <- adipose.rz[,annot$a_gene_id[which(annot$gene_symbol=="Il1b")]]
+Nfkb1.adipose <- adipose.rz[,annot$a_gene_id[which(annot$gene_symbol=="Nfkb1")]]
+
+f2g$pheno <- cbind(f2g$pheno[,c("MouseNum","Sex","pgm")],phenotypes.rz[c("Fat.wt", "Weight", "adipose.turnover")], Il1b.islet, Nfkb1.islet, Il1b.adipose, Nfkb1.adipose)
+names(f2g$pheno)
+
+f2g<- calc.genoprob(f2g, step = 1, stepwidth = "fixed", map.function = "c-f", error.prob = 0.01)
+f2g <- sim.geno(f2g, step = 1, stepwidth = "fixed", map.function = "c-f", error.prob = 0.01)
+
+sex <- as.numeric(f2g$pheno$Sex)
+
+load(file="data/f2g_perm1.Rdata")
+
+
+
+# fat weight: chrom 2, pos 70
+# body weight: chrom 2 pos 56.3
+# Il1b islet expression: chrom 2 pos 73.7
+
+phenotypes.rz$Fat.wt[phenotypes.rz$Fat.wt <0 & is.numeric(phenotypes.rz$Fat.wt)] <- NA
+
+BIC(lm(Fat.wt ~ sex))
+
+
+
+
+f2g$pheno <- transform(f2g$pheno, Q2 = as.factor(f2g$geno[[]]$data[,find.marker(f2g, CHR, POS)]))
+levels(f2g$pheno$Q2) <- c("B", "H", "R")
+#f2g <- fill.geno(f2g, method="argmax")
+#f2g$pheno <- transform(f2g$pheno,Q2 = as.factor(f2g$geno[[2]]$data[,find.marker(f2g, 2, 75.2)]))
+#levels(f2g$pheno$Q2) <- c("B","H","R")names(f2g$pheno)f2g$pheno <- transform(f2g$pheno, adipor1_islet)
+qplot(adipor1_islet, INS.10wk, color=Q2, shape=Sex, data=f2g$pheno) + geom_smooth(aes(group=Q2), method="lm", se=FALSE)
+#Ghrh_islet <- islet.rz[, annot[grep("Ghrh$", annot$gene1), 1]]
+#lm(formula = INS.10wk ~ Adipor1_islet + Q2, data = f2g$pheno)
+# ^ do summary of this
