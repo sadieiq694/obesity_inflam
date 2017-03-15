@@ -98,10 +98,15 @@ triple.fit <- function(X, Y, Q) {
 }
 
 #peak on chr 2 at position 70
-triple.fit(gene.exp("Il1b", islet.rz), clinical("Fat.wt", phenotypes), genotype(chr = 2, pos = 70))
-triple.fit(gene.exp("Il1b", islet.rz), clinical("Weight", phenotypes), genotype(chr = 2, pos = 56.3))
-triple.fit(gene.exp("Nfkb1", islet.rz), clinical("Adipose.turnover", phenotypes), genotype(chr = 10, pos = 42))
-triple.fit(gene.exp("Nfkb1", islet.rz), clinical("Adipose.turnover", phenotypes), genotype(chr = 12, pos = 24.4))
+triple.fit(gene.exp("Il1b", islet.rz), clinical("Fat.wt", phenotypes.rz), genotype(chr = 2, pos = 70))
+triple.fit(gene.exp("Il1b", islet.rz), clinical("Fat.wt", phenotypes.rz), genotype(chr = 2, pos = 73.7))
+
+C12 <- genotype(chr = 12, pos = 24.4)
+
+
+triple.fit(Nfkb1.islet, phenotypes.rz$adipose.turnover, C12)
+
+triple.fit(gene.exp("Nfkb1", islet.rz), clinical("Adipose.turnover", phenotypes.rz), genotype(chr = 12, pos = 24.4))
 #peak chromosome 10 pos 42
 #peak chromosome 12 pos 24.4
 

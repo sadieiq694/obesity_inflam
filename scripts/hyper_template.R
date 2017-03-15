@@ -23,16 +23,36 @@ sex <- as.numeric(f2g$pheno$Sex)
 
 load(file="data/f2g_perm1.Rdata")
 
+genotype <- function(chr, pos) {
+  if(chr >0 && chr < 21 && pos >= 0 && pos <= 100) {
+    return(f2g$geno[[chr]]$data[,find.marker(f2g, chr = chr, pos= pos)])
+  }
+}
 
 
+C2 <- genotype(2, 70)
+C2
+  
 # fat weight: chrom 2, pos 70
 # body weight: chrom 2 pos 56.3
 # Il1b islet expression: chrom 2 pos 73.7
 
 phenotypes.rz$Fat.wt[phenotypes.rz$Fat.wt <0 & is.numeric(phenotypes.rz$Fat.wt)] <- NA
 
-BIC(lm(Fat.wt ~ sex))
 
+#Shared QTL Peak Chrom 2 Fat Weight, Il1b islet expression
+#LOW SCORE IS BEST!
+BIC(lm(formula = Fat.wt ~ sex, data = f2g$pheno))
+#1392.893
+BIC(lm(formula = Fat.wt ~ sex + Il1b.islet, data = f2g$pheno))
+#1268.208
+BIC(lm(formula = Fat.wt ~ sex + Il1b.islet + C2, data = f2g$pheno))
+#1239.495
+
+
+
+
+#Shared QTL Peak chrom 12 adipose turnover, Il1b
 
 
 
